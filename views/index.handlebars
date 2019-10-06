@@ -1,0 +1,28 @@
+<h1 style=" text-align: center">database gui</h1>
+<div style=" width:100%; display:flex; flex-wrap:wrap">
+    <div style="width: 50%">
+        <h2 style=" text-align: center">Available Subjects <br><br> </h2>
+        <div style="max-height:500px; overflow:scroll;">
+            {{#each results}}
+            <form action="" method="post">
+                <button style="width:90%; margin:5px" class="btn btn-secondary" type="value" name="name"
+                    value="{{this.subject.value}}">
+                    <em><strong>TYPE: </strong></em>{{this.subject.type}} <br>
+                    <em><strong>VALUE:</strong></em> {{this.subject.value}}
+
+                </button>
+            </form>
+            {{/each}}
+        </div>
+    </div>
+    <div style="width: 50%">
+        <h2 style=" text-align: center">Predicates and Objects of Selected Subject</h2>
+        <ul class="list-group">
+            {{#each preAndObj}}
+            <li class="list-group-item"><strong>Predicate:</strong>{{this.predicate.value}} <br><strong>Object:</strong>
+                {{this.object.value}} </li>
+            {{/each}}
+
+        </ul>
+    </div>
+</div>
