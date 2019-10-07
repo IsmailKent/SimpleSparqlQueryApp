@@ -1,7 +1,7 @@
 <h1 style=" text-align: center">database gui</h1>
 <div style=" width:100%; display:flex; flex-wrap:wrap">
     <div style="width: 50%">
-        <h2 style=" text-align: center">Available Concepts of type owl:Class <br><br> </h2>
+        <h2 style=" text-align: center">Available Concepts of type owl:Class <br><br><br> </h2>
         <div style="max-height:500px; overflow:scroll;">
             {{#each results}}
             <form action="" method="post">
@@ -16,7 +16,7 @@
         </div>
     </div>
     <div style="width: 50%">
-        <h2 style=" text-align: center">Predicates and Objects of Selected Concept </h2>
+        <h2 style=" text-align: center">Predicates and Objects of Selected Concept <br> {{this.subject}} </h2>
         <ul class="list-group">
             {{#each preAndObj}}
             <li class="list-group-item"><strong>Predicate:</strong>{{this.predicate.value}} <br><strong>Object:</strong>

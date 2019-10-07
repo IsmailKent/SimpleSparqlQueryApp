@@ -49,6 +49,7 @@ app.post('/', (req,res)=> {
     client.query(`Select ?predicate ?object WHERE { <${subject}> ?predicate ?object }`).execute((error, results) => {
         if (!error) {
             res.render('layouts/index', {
+                subject,
                 results: arr,
                 preAndObj: results.results.bindings
             });
