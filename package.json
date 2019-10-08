@@ -14,6 +14,7 @@
     "express-formidable": "^1.2.0",
     "express-handlebars": "^3.1.0",
     "fuseki": "^1.1.0",
+    "path": "^0.12.7",
     "sparql-client": "^0.2.0",
     "util": "^0.12.1"
   },

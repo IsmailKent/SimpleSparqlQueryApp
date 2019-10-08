@@ -14,6 +14,8 @@ let endpoint = 'http://localhost:3030/dataset/query';
 let client = new SparqlClient(endpoint);
 
 // to get data on button click
+const path = require('path');
+
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
@@ -21,16 +23,25 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-const firstQuery = "prefix owl: <http://www.w3.org/2002/07/owl#> prefix rdfsyntax: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT  ?subject WHERE { ?subject rdfsyntax:type owl:Class}"
-let arr=null;
+const firstQuery = "prefix owl: <http://www.w3.org/2002/07/owl#> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT  ?subject WHERE { ?subject rdf:type owl:Class}"
+
+let resultsArr=[];
 app.get('/', (req, res) => {
 
     client.query(firstQuery).execute((error, results) => {
         if (!error) {
-            arr = results.results.bindings;
+            resultsArr=[];
+            for (var i=0;i<results.results.bindings.length;i++){
+                let result = results.results.bindings[i];
+                resultsArr.push({
+                    result: result,
+                    cleanResult : path.basename(result.subject.value)
 
+                });
+            }
+     
             res.render('layouts/index', {
-                results: arr
+                results : resultsArr
             });
  
         }
@@ -48,10 +59,17 @@ app.post('/', (req,res)=> {
     let subject = req.body['name'];
     client.query(`Select ?predicate ?object WHERE { <${subject}> ?predicate ?object }`).execute((error, results) => {
         if (!error) {
+            let preAndObj = [];
+            for (var i =0;i<results.results.bindings.length;i++){
+                preAndObj.push({
+                    predicate: path.basename(results.results.bindings[i].predicate.value),
+                    object: path.basename(results.results.bindings[i].object.value)
+                });
+            }
             res.render('layouts/index', {
-                subject,
-                results: arr,
-                preAndObj: results.results.bindings
+                subject: path.basename(subject),
+                results: resultsArr,
+                preAndObj
             });
         }
         else {
